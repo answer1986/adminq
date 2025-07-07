@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function Header() {
   return (
@@ -24,9 +25,9 @@ export default function Header() {
           fontWeight: 'bold',
           color: '#fbbf24'
         }}>
-          <a href="/" title="AdminQ - Administración Profesional de Condominios" style={{textDecoration: 'none'}}>
-            <img src="/images/adminq-logo2.png" alt="AdminQ - Administración de Condominios" width={120} height={110} style={{objectFit: 'contain'}} />
-          </a>
+          <Link href="/" title="AdminQ - Administración Profesional de Condominios" style={{textDecoration: 'none'}}>
+            <Image src="/images/adminq-logo2.png" alt="AdminQ - Administración de Condominios" width={120} height={110} style={{objectFit: 'contain'}} />
+          </Link>
         </div>
         
         <nav style={{
@@ -34,38 +35,38 @@ export default function Header() {
           gap: '32px',
           alignItems: 'center'
         }}>
-          <a href="#inicio" style={{
+          <Link href="#inicio" style={{
             color: 'white',
             textDecoration: 'none',
             fontWeight: '500',
             transition: 'color 0.3s ease'
           }}>
             Inicio
-          </a>
-          <a href="#servicios" style={{
+          </Link>
+          <Link href="#servicios" style={{
             color: 'white',
             textDecoration: 'none',
             fontWeight: '500',
             transition: 'color 0.3s ease'
           }}>
             Servicios
-          </a>
-          <a href="#transparencia" style={{
+          </Link>
+          <Link href="#transparencia" style={{
             color: 'white',
             textDecoration: 'none',
             fontWeight: '500',
             transition: 'color 0.3s ease'
           }}>
             Transparencia
-          </a>
-          <a href="#contacto" style={{
+          </Link>
+          <Link href="#contacto" style={{
             color: 'white',
             textDecoration: 'none',
             fontWeight: '500',
             transition: 'color 0.3s ease'
           }}>
             Contacto
-          </a>
+          </Link>
           <a 
             href="https://wa.me/56974532868" 
             target="_blank" 

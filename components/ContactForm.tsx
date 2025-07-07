@@ -1,11 +1,15 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Script from 'next/script';
 
 declare global {
   interface Window {
-    grecaptcha: any;
+    grecaptcha: {
+      ready: (callback: () => void) => void;
+      render: (container: string, options: { sitekey: string | undefined }) => void;
+      getResponse: () => string;
+      reset: () => void;
+    };
   }
 }
 
