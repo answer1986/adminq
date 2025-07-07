@@ -1,0 +1,66 @@
+[2025-07-07T01:14:57.155Z] INFO: 🔵 Iniciando proceso de envío de correo...
+[2025-07-07T01:14:57.159Z] INFO: 📝 Datos recibidos
+Data: {
+  "nombre": "alvaro ",
+  "telefono": "963725358",
+  "email": "inv.riquelme@me.com",
+  "condominio": "kskmsklms",
+  "mensajeLength": 10,
+  "tieneRecaptcha": true
+}
+[2025-07-07T01:14:57.161Z] INFO: 🔑 Verificando reCAPTCHA...
+[2025-07-07T01:14:57.257Z] INFO: ✅ Respuesta reCAPTCHA
+Data: {
+  "success": true,
+  "challenge_ts": "2025-07-07T01:14:20Z",
+  "hostname": "localhost"
+}
+[2025-07-07T01:14:57.258Z] INFO: 📧 Configurando transporte de correo...
+Data: {
+  "host": "srv28.cpanelhost.cl",
+  "port": "465",
+  "user": "✅ Configurado",
+  "pass": "✅ Configurado",
+  "from": "AdminQ <contacto@adminq.cl>",
+  "to": "soporte@quas.cl"
+}
+[2025-07-07T01:14:57.260Z] INFO: 🔄 Verificando conexión SMTP...
+[2025-07-07T01:14:57.470Z] INFO: ✅ Conexión SMTP verificada correctamente
+[2025-07-07T01:14:57.471Z] INFO: 📤 Intentando enviar correo...
+[2025-07-07T01:14:57.614Z] INFO: ✅ Correo enviado exitosamente
+Data: {
+  "messageId": "<a910e0dd-3dc1-83c8-c5b0-9645670c4535@adminq.cl>"
+}
+[2025-07-07T01:16:58.037Z] INFO: 🔵 Iniciando proceso de envío de correo...
+[2025-07-07T01:16:58.041Z] INFO: 📝 Datos recibidos
+Data: {
+  "nombre": "alvaro ",
+  "telefono": "963725358",
+  "email": "inv.riquelme@me.com",
+  "condominio": "kskmsklms",
+  "mensajeLength": 10,
+  "tieneRecaptcha": true
+}
+[2025-07-07T01:16:58.041Z] INFO: 🔑 Verificando reCAPTCHA...
+[2025-07-07T01:16:58.134Z] INFO: ✅ Respuesta reCAPTCHA
+Data: {
+  "success": true,
+  "challenge_ts": "2025-07-07T01:15:56Z",
+  "hostname": "localhost"
+}
+[2025-07-07T01:16:58.135Z] INFO: 📧 Configurando transporte de correo...
+Data: {
+  "host": "srv28.cpanelhost.cl",
+  "port": "465",
+  "user": "✅ Configurado",
+  "pass": "✅ Configurado",
+  "from": "AdminQ <contacto@adminq.cl>",
+  "to": "soporte@quas.cl"
+}
+[2025-07-07T01:16:58.138Z] INFO: 🔄 Verificando conexión SMTP...
+[2025-07-07T01:16:58.223Z] INFO: ✅ Conexión SMTP verificada correctamente
+[2025-07-07T01:16:58.224Z] INFO: 📤 Intentando enviar correo...
+[2025-07-07T01:16:58.366Z] INFO: ✅ Correo enviado exitosamente
+Data: {
+  "messageId": "<b09aef21-4be0-51b7-e33c-15ef834cde11@adminq.cl>"
+}

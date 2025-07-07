@@ -1,26 +1,240 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Animaciones personalizadas */
+@keyframes fade-in-up {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.8);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulse-border {
+  0%, 100% {
+    border-color: rgba(59, 130, 246, 0.5);
+  }
+  50% {
+    border-color: rgba(59, 130, 246, 1);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 1s ease-out;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+.animate-pulse-border {
+  animation: pulse-border 2s ease-in-out infinite;
+}
+
+/* Efectos de hover suaves */
+.hover-scale {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-scale:hover {
+  transform: scale(1.05) translateY(-5px);
+}
+
+/* Gradientes personalizados */
+.gradient-text {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-bg-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.gradient-bg-secondary {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+/* Glass morphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Scroll suave */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Mejoras para dispositivos móviles */
+@media (max-width: 768px) {
+  .animate-fade-in-up {
+    animation-duration: 0.8s;
+  }
+}
+
+/* Efectos de partículas */
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  animation: float 4s ease-in-out infinite;
+}
+
+.particle:nth-child(2) {
+  animation-delay: -1s;
+  left: 20%;
+}
+
+.particle:nth-child(3) {
+  animation-delay: -2s;
+  left: 40%;
+  width: 2px;
+  height: 2px;
+}
+
+.particle:nth-child(4) {
+  animation-delay: -3s;
+  left: 60%;
+}
+
+.particle:nth-child(5) {
+  animation-delay: -4s;
+  left: 80%;
+  width: 3px;
+  height: 3px;
+}
+
+/* Sombras personalizadas */
+.shadow-glow-blue {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.shadow-glow-green {
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+}
+
+.shadow-glow-purple {
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+}
+
+.shadow-glow-orange {
+  box-shadow: 0 0 20px rgba(251, 146, 60, 0.3);
+}
+
+.shadow-glow-red {
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+}
+
+.shadow-glow-teal {
+  box-shadow: 0 0 20px rgba(20, 184, 166, 0.3);
+}
+
+/* Efectos para formularios */
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+input:hover, textarea:hover {
+  border-color: #6b7280 !important;
+}
+
+/* Efectos de hover para botones */
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 40px rgba(245, 158, 11, 0.5);
 }
