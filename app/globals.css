@@ -161,6 +161,152 @@ html {
   .animate-fade-in-up {
     animation-duration: 0.8s;
   }
+  
+  /* Desactivar parallax en móviles para mejor rendimiento */
+  section[style*="background-attachment: fixed"] {
+    background-attachment: scroll !important;
+  }
+  
+  /* Mejorar espaciado en móviles */
+  section {
+    padding: 40px 15px !important;
+  }
+  
+  /* Mejores grids para móviles */
+  div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+    gap: 15px !important;
+  }
+  
+  /* Botones más accesibles en móviles */
+  button {
+    min-height: 48px !important;
+    padding: 12px 20px !important;
+    font-size: 1rem !important;
+  }
+  
+  /* Formularios más accesibles */
+  input, textarea {
+    min-height: 48px !important;
+    font-size: 16px !important; /* Evita zoom en iOS */
+  }
+  
+  /* Mejor espaciado para textos */
+  h1, h2, h3 {
+    line-height: 1.3 !important;
+    margin-bottom: 20px !important;
+  }
+  
+  p, li {
+    line-height: 1.6 !important;
+  }
+  
+  /* Mejor padding para contenedores */
+  div[style*="padding: 40px"] {
+    padding: 25px !important;
+  }
+  
+  div[style*="padding: 50px"] {
+    padding: 30px !important;
+  }
+  
+  /* Mejores márgenes */
+  div[style*="margin: 0 auto"] {
+    margin: 0 15px !important;
+  }
+}
+
+/* Mejoras para tablets */
+@media (max-width: 1024px) and (min-width: 769px) {
+  /* Grids más compactos en tablets */
+  div[style*="grid-template-columns: repeat(auto-fit, minmax(450px, 1fr))"] {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+  }
+  
+  div[style*="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr))"] {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+  }
+  
+  /* Mejor espaciado para tablets */
+  section {
+    padding: 50px 20px !important;
+  }
+}
+
+/* Mejoras para móviles pequeños */
+@media (max-width: 480px) {
+  /* Espaciado más compacto */
+  section {
+    padding: 30px 10px !important;
+  }
+  
+  /* Contenedores más pequeños */
+  div[style*="padding: 25px"] {
+    padding: 15px !important;
+  }
+  
+  div[style*="padding: 30px"] {
+    padding: 20px !important;
+  }
+  
+  /* Botones más pequeños pero accesibles */
+  button {
+    padding: 10px 16px !important;
+    font-size: 0.9rem !important;
+  }
+  
+  /* Mejor espaciado para grids */
+  div[style*="gap: 30px"] {
+    gap: 15px !important;
+  }
+  
+  div[style*="gap: 25px"] {
+    gap: 12px !important;
+  }
+  
+  /* Mejor manejo de flexbox */
+  div[style*="display: flex"] {
+    flex-wrap: wrap !important;
+    gap: 15px !important;
+  }
+  
+  /* Imágenes más pequeñas */
+  img {
+    max-width: 80px !important;
+    height: auto !important;
+  }
+}
+
+/* Mejoras para dispositivos con hover */
+@media (hover: hover) {
+  .hover-scale:hover {
+    transform: scale(1.02) translateY(-2px);
+  }
+  
+  button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  }
+  
+  div[style*="cursor: pointer"]:hover {
+    transform: translateY(-5px);
+  }
+}
+
+/* Mejoras para dispositivos sin hover (touch) */
+@media (hover: none) {
+  .hover-scale:hover {
+    transform: none;
+  }
+  
+  button:hover {
+    transform: none;
+  }
+  
+  /* Mejor feedback táctil */
+  button:active {
+    transform: translateY(1px);
+  }
 }
 
 /* Efectos de partículas */
@@ -199,42 +345,71 @@ html {
 
 /* Sombras personalizadas */
 .shadow-glow-blue {
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
 }
 
 .shadow-glow-green {
-  box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
 }
 
 .shadow-glow-purple {
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
 }
 
 .shadow-glow-orange {
-  box-shadow: 0 0 20px rgba(251, 146, 60, 0.3);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
 }
 
 .shadow-glow-red {
-  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
 }
 
 .shadow-glow-teal {
-  box-shadow: 0 0 20px rgba(20, 184, 166, 0.3);
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
 }
 
-/* Efectos para formularios */
+/* Mejoras para formularios */
 input:focus, textarea:focus {
   outline: none;
-  border-color: #3b82f6 !important;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+  border-color: #3b82f6;
 }
 
 input:hover, textarea:hover {
-  border-color: #6b7280 !important;
+  border-color: #60a5fa;
 }
 
-/* Efectos de hover para botones */
+/* Mejoras para botones */
 button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 20px 40px rgba(245, 158, 11, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Mejoras de rendimiento */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Mejor contraste para accesibilidad */
+@media (prefers-contrast: high) {
+  button {
+    border: 2px solid currentColor !important;
+  }
+  
+  div[style*="background: linear-gradient"] {
+    background: solid !important;
+  }
+}
+
+/* Mejoras para modo oscuro del sistema */
+@media (prefers-color-scheme: dark) {
+  /* Mejoras específicas para modo oscuro si es necesario */
+  .glass {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
 }
