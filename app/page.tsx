@@ -637,7 +637,7 @@ export default function Home() {
                   color: '#1f2937',
                   marginBottom: '20px'
                 }}>
-                  La empresa "AdminQ" está certificada en norma ISO 9001
+                  La empresa &quot;AdminQ&quot; está certificada en norma ISO 9001
                 </h3>
                 <p style={{
                   color: '#6b7280',

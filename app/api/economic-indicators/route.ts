@@ -43,7 +43,7 @@ export async function GET() {
     };
 
     // Procesar resultados exitosos
-    results.forEach((result, index) => {
+    results.forEach((result) => {
       if (result.status === 'fulfilled') {
         const { indicador, data } = result.value;
         const latestValue = data.serie?.[0];
