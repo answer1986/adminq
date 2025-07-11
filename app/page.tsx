@@ -738,10 +738,24 @@ export default function Home() {
       {/* Contacto - GRADIENTE AZUL INTENSO */}
       <section id="contacto" style={{
         padding: '80px 20px',
-        background: 'linear-gradient(135deg, #1e40af 0%, #1e3a8a 50%, #312e81 100%)',
+        background: 'url(/images/condominio2.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
         color: 'white',
         position: 'relative'
       }}>
+        {/* Overlay con gradiente */}
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: 'linear-gradient(135deg, rgba(11, 35, 113, 0.95) 0%, rgba(17, 117, 17, 0.9) 100%)',
+          zIndex: 1
+        }}></div>
+
         {/* Efectos de fondo */}
         <div style={{
           position: 'absolute',
@@ -751,7 +765,8 @@ export default function Home() {
           height: '200px',
           background: 'radial-gradient(circle, rgba(251, 191, 36, 0.2) 0%, transparent 70%)',
           borderRadius: '50%',
-          animation: 'pulse 4s infinite'
+          animation: 'pulse 4s infinite',
+          zIndex: 2
         }}></div>
         <div style={{
           position: 'absolute',
@@ -761,7 +776,8 @@ export default function Home() {
           height: '150px',
           background: 'radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, transparent 70%)',
           borderRadius: '50%',
-          animation: 'pulse 3s infinite 1s'
+          animation: 'pulse 3s infinite 1s',
+          zIndex: 2
         }}></div>
         
         <div style={{
@@ -769,7 +785,7 @@ export default function Home() {
           margin: '0 auto', 
           textAlign: 'center', 
           position: 'relative', 
-          zIndex: 2
+          zIndex: 3
         }}>
           <h2 style={{
             fontSize: 'clamp(2rem, 4vw, 3.5rem)', 
