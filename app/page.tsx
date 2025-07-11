@@ -1,8 +1,14 @@
+'use client';
+
+import { useState } from 'react';
 import ContactForm from '@/components/ContactForm';
 import EconomicIndicators from '@/components/EconomicIndicators';
 import MinvuSection from '@/components/MinvuSection';
+import QRModal from '@/components/QRModal';
 
 export default function Home() {
+  const [isQRModalOpen, setIsQRModalOpen] = useState(false);
+
   const services = [
     {
       icon: '🏛️', 
@@ -175,19 +181,21 @@ export default function Home() {
             justifyContent: 'center', 
             flexWrap: 'wrap'
           }}>
-            <button style={{
-              backgroundColor: '#f59e0b',
-              color: '#1e40af',
-              fontWeight: 'bold',
-              padding: 'clamp(12px, 2vw, 16px) clamp(20px, 4vw, 40px)',
-              borderRadius: '12px',
-              border: 'none',
-              fontSize: 'clamp(1rem, 2vw, 1.2rem)',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              boxShadow: '0 8px 25px rgba(245, 158, 11, 0.4)',
-              transform: 'translateY(0)'
-            }}>
+            <button 
+              onClick={() => setIsQRModalOpen(true)}
+              style={{
+                backgroundColor: '#f59e0b',
+                color: '#1e40af',
+                fontWeight: 'bold',
+                padding: 'clamp(12px, 2vw, 16px) clamp(20px, 4vw, 40px)',
+                borderRadius: '12px',
+                border: 'none',
+                fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 8px 25px rgba(245, 158, 11, 0.4)',
+                transform: 'translateY(0)'
+              }}>
               Solicitar Propuesta
             </button>
             <button style={{
@@ -827,6 +835,7 @@ export default function Home() {
                 marginBottom: '10px'
               }}>Teléfono</h3>
               <p style={{fontSize: 'clamp(1rem, 2vw, 1.1rem)'}}>+56 9 7453 2868</p>
+              <p style={{fontSize: 'clamp(1rem, 2vw, 1.1rem)'}}>+56 9 5948 6825</p>
             </div>
             <div style={{
               background: 'rgba(30, 58, 138, 0.8)',
@@ -848,26 +857,33 @@ export default function Home() {
                 fontWeight: 'bold', 
                 marginBottom: '10px'
               }}>Ubicación</h3>
-              <p style={{fontSize: 'clamp(1rem, 2vw, 1.1rem)'}}>Santiago, Chile</p>
+              <p style={{fontSize: 'clamp(1rem, 2vw, 1.1rem)'}}>Santiago, Metro Universidad de Chile</p>
             </div>
           </div>
-          <button style={{
-            background: 'linear-gradient(135deg, #f59e0b 0%, #f97316 100%)',
-            color: '#1e40af',
-            fontWeight: 'bold',
-            padding: 'clamp(15px, 3vw, 20px) clamp(30px, 5vw, 50px)',
-            borderRadius: '15px',
-            border: 'none',
-            fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)',
-            cursor: 'pointer',
-            transition: 'all 0.3s ease',
-            boxShadow: '0 15px 35px rgba(245, 158, 11, 0.4)',
-            transform: 'translateY(0)'
-          }}>
+          <button 
+            onClick={() => setIsQRModalOpen(true)}
+            style={{
+              background: 'linear-gradient(135deg, #f59e0b 0%, #f97316 100%)',
+              color: '#1e40af',
+              fontWeight: 'bold',
+              padding: 'clamp(15px, 3vw, 20px) clamp(30px, 5vw, 50px)',
+              borderRadius: '15px',
+              border: 'none',
+              fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              boxShadow: '0 15px 35px rgba(245, 158, 11, 0.4)',
+              transform: 'translateY(0)'
+            }}>
             Solicitar Cotización Gratuita
           </button>
         </div>
       </section>
+
+      <QRModal 
+        isOpen={isQRModalOpen}
+        onClose={() => setIsQRModalOpen(false)}
+      />
     </div>
   );
 }

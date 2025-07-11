@@ -29,7 +29,7 @@ export default function Footer() {
               marginBottom: '20px',
               lineHeight: '1.6'
             }}>
-              Administrador profesional inscrito en el Colegio de Administración de Chile, 
+              Empresa inscrita en el Registro Nacional de Administración de Copropiedades y Condominios, 
               cumpliendo con la Ley 21.442 para una gestión transparente y moderna.
             </p>
             <div style={{
@@ -37,22 +37,35 @@ export default function Footer() {
               alignItems: 'center',
               gap: '12px'
             }}>
+             
               <div style={{
-                width: '40px',
-                height: '40px',
-                background: 'linear-gradient(135deg, #3b82f6 0%, #1e40af 100%)',
+                border: '2px solid #f59e0b',
                 borderRadius: '50%',
+                padding: '12px',
                 display: 'flex',
+                flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: '0.875rem',
-                fontWeight: 'bold'
+                fontSize: '0.75rem',
+                color: '#f59e0b',
+                position: 'relative',
+                width: '80px',
+                height: '80px',
+                transform: 'rotate(-10deg)'
               }}>
-                AC
+                <span style={{fontWeight: 'bold'}}>ISO 9001</span>
+                <span style={{fontSize: '0.65rem', marginTop: '2px'}}>CERTIFIED</span>
+                <div style={{
+                  position: 'absolute',
+                  top: '-2px',
+                  left: '-2px',
+                  right: '-2px',
+                  bottom: '-2px',
+                  border: '1px solid #f59e0b',
+                  borderRadius: '50%',
+                  opacity: 0.5
+                }}></div>
               </div>
-              <span style={{fontSize: '0.875rem', color: '#d1d5db'}}>
-                Certificación ISO 9001 en proceso
-              </span>
             </div>
           </div>
           
@@ -76,6 +89,7 @@ export default function Footer() {
               <li>🏠 Tecnología Domótica</li>
               <li>💻 Portal de Transparencia</li>
               <li>⚙️ Sistemas Personalizados</li>
+              <li>🌐 Certificacion de normas</li>
             </ul>
           </div>
           
@@ -95,7 +109,7 @@ export default function Footer() {
               lineHeight: '2'
             }}>
               <li>✅ Ley 21.442 Chile</li>
-              <li>✅ Colegio de Administración</li>
+              <li>✅ Registro Nacional de Administración</li>
               <li>✅ Certificación ISO 9001</li>
               <li>✅ Transparencia Total</li>
               <li>✅ Rendición de Cuentas</li>
@@ -119,10 +133,11 @@ export default function Footer() {
                 📧 contacto@adminq.cl
               </p>
               <p style={{marginBottom: '8px'}}>
-                📱 +56 9 7453 2868
+                📱 +56 9 7453 2868<br />
+                📱 +56 9 5948 6825
               </p>
               <p style={{marginBottom: '8px'}}>
-                📍 Santiago, Chile
+                📍 Santiago, Metro Universidad de Chile
               </p>
               <p style={{marginBottom: '8px'}}>
                 🌐 Portal 24/7
