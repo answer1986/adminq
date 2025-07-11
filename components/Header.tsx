@@ -29,7 +29,7 @@ export default function Header() {
 
   return (
     <header style={{
-      backgroundColor: '#1e40af',
+      background: 'linear-gradient(135deg, rgba(11, 35, 113, 0.9) 0%, rgba(17, 117, 17, 0.8) 100%)',
       color: 'white',
       padding: '12px 0',
       position: 'sticky',

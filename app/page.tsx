@@ -100,7 +100,7 @@ export default function Home() {
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'linear-gradient(135deg, rgba(30, 64, 175, 0.9) 0%, rgba(30, 58, 138, 0.8) 100%)',
+          background: 'linear-gradient(135deg, rgba(30, 64, 175, 0.9) 0%, rgba(17, 117, 17, 0.8) 100%)',
           zIndex: 1
         }}></div>
         
