@@ -33,6 +33,7 @@ const benefits: Benefit[] = [
 
 export default function BenefitCoverflow() {
   const [current, setCurrent] = useState(0);
+  const [screenSize, setScreenSize] = useState('desktop');
   const length = benefits.length;
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -56,6 +57,28 @@ export default function BenefitCoverflow() {
     }, 3000);
   }
 
+  // Handle responsive behavior
+  useEffect(() => {
+    const handleResize = () => {
+      if (typeof window !== 'undefined') {
+        const width = window.innerWidth;
+        if (width <= 480) {
+          setScreenSize('mobile');
+        } else if (width <= 768) {
+          setScreenSize('tablet');
+        } else {
+          setScreenSize('desktop');
+        }
+      }
+    };
+
+    handleResize(); // Set initial size
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
+  }, []);
+
   useEffect(() => {
     timerRef.current = setInterval(() => {
       setCurrent((prev) => (prev + 1) % length);
@@ -65,16 +88,60 @@ export default function BenefitCoverflow() {
     };
   }, [length]);
 
+  // Get responsive values based on screen size
+  const getResponsiveValues = () => {
+    switch (screenSize) {
+      case 'mobile':
+        return {
+          cardWidth: 180,
+          cardHeight: 240,
+          translateXBase: 60,
+          translateXSide: 80,
+        };
+      case 'tablet':
+        return {
+          cardWidth: 220,
+          cardHeight: 300,
+          translateXBase: 100,
+          translateXSide: 140,
+        };
+      default: // desktop
+        return {
+          cardWidth: 260,
+          cardHeight: 340,
+          translateXBase: 120,
+          translateXSide: 180,
+        };
+    }
+  };
+
+  const responsiveValues = getResponsiveValues();
+
   return (
-    <div style={{ width: '100%', maxWidth: 900, margin: '0 auto', position: 'relative', height: 380 }}>
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: 340, position: 'relative' }}>
+    <div style={{ 
+      width: '100%', 
+      maxWidth: '800px', 
+      margin: '0 auto', 
+      position: 'relative', 
+      height: 'clamp(280px, 45vh, 360px)',
+      padding: '0 clamp(60px, 10vw, 80px)',
+      overflow: 'hidden'
+    }}>
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: 'clamp(240px, 40vh, 320px)', 
+        position: 'relative',
+        overflow: 'visible'
+      }}>
         {benefits.map((benefit, idx) => {
-          // Coverflow effect: center is scale(1), sides are scale(0.8), further are scale(0.6)
           const offset = idx - current;
           let scale = 0.6;
           let zIndex = 1;
           let opacity = 0.3;
-          let translateX = offset * 120;
+          let translateX = offset * (responsiveValues.translateXBase * 0.8); // Reducir espaciado
+          
           if (offset === 0) {
             scale = 1;
             zIndex = 3;
@@ -84,8 +151,9 @@ export default function BenefitCoverflow() {
             scale = 0.8;
             zIndex = 2;
             opacity = 0.7;
-            translateX = offset * 180;
+            translateX = offset * (responsiveValues.translateXSide * 0.8); // Reducir espaciado
           }
+          
           return (
             <div
               key={idx}
@@ -97,10 +165,10 @@ export default function BenefitCoverflow() {
                 zIndex,
                 opacity,
                 transition: 'all 0.5s cubic-bezier(.4,2,.3,1)',
-                width: 260,
-                height: 340,
+                width: responsiveValues.cardWidth,
+                height: responsiveValues.cardHeight,
                 boxShadow: offset === 0 ? '0 8px 32px rgba(30,64,175,0.18)' : '0 2px 8px rgba(0,0,0,0.08)',
-                borderRadius: 18,
+                borderRadius: 'clamp(12px, 2vw, 18px)',
                 background: '#fff',
                 overflow: 'hidden',
                 cursor: offset === 0 ? 'default' : 'pointer',
@@ -112,22 +180,103 @@ export default function BenefitCoverflow() {
               }}
               onClick={() => goTo(idx)}
             >
-              <div style={{ width: '100%', height: 200, background: '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ 
+                width: '100%', 
+                height: 'clamp(120px, 35%, 200px)', 
+                background: '#f3f4f6', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center' 
+              }}>
                 {benefit.image ? (
-                  <img src={benefit.image} alt={benefit.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img 
+                    src={benefit.image} 
+                    alt={benefit.title} 
+                    style={{ 
+                      width: '100%', 
+                      height: '100%', 
+                      objectFit: 'cover' 
+                    }} 
+                  />
                 ) : (
-                  <span style={{ color: '#d1d5db', fontSize: 32 }}>Imagen</span>
+                  <span style={{ color: '#d1d5db', fontSize: 'clamp(20px, 4vw, 32px)' }}>Imagen</span>
                 )}
               </div>
-              <div style={{ padding: '24px 18px 18px 18px', textAlign: 'center' }}>
-                <h3 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#1e40af', marginBottom: 8 }}>{benefit.title}</h3>
+              <div style={{ 
+                padding: 'clamp(16px, 3vw, 24px) clamp(12px, 2vw, 18px) clamp(12px, 2vw, 18px) clamp(12px, 2vw, 18px)', 
+                textAlign: 'center',
+                flex: 1,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}>
+                <h3 style={{ 
+                  fontSize: 'clamp(0.8rem, 2.5vw, 1.1rem)', 
+                  fontWeight: 700, 
+                  color: '#1e40af', 
+                  marginBottom: 0,
+                  lineHeight: 1.3
+                }}>
+                  {benefit.title}
+                </h3>
               </div>
             </div>
           );
         })}
       </div>
-      <button onClick={prev} style={{ position: 'absolute', left: 0, top: '50%', transform: 'translateY(-50%)', background: '#fff', border: '1.5px solid #1e40af', borderRadius: '50%', width: 40, height: 40, fontSize: 22, color: '#1e40af', cursor: 'pointer', zIndex: 10, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} aria-label="Anterior">&#8592;</button>
-      <button onClick={next} style={{ position: 'absolute', right: 0, top: '50%', transform: 'translateY(-50%)', background: '#fff', border: '1.5px solid #1e40af', borderRadius: '50%', width: 40, height: 40, fontSize: 22, color: '#1e40af', cursor: 'pointer', zIndex: 10, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }} aria-label="Siguiente">&#8594;</button>
+      
+      {/* Navigation buttons */}
+      <button 
+        onClick={prev} 
+        style={{ 
+          position: 'absolute', 
+          left: '15px', 
+          top: '50%', 
+          transform: 'translateY(-50%)', 
+          background: '#fff', 
+          border: '1.5px solid #1e40af', 
+          borderRadius: '50%', 
+          width: 'clamp(32px, 8vw, 40px)', 
+          height: 'clamp(32px, 8vw, 40px)', 
+          fontSize: 'clamp(16px, 4vw, 22px)', 
+          color: '#1e40af', 
+          cursor: 'pointer', 
+          zIndex: 10, 
+          boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }} 
+        aria-label="Anterior"
+      >
+        &#8592;
+      </button>
+      
+      <button 
+        onClick={next} 
+        style={{ 
+          position: 'absolute', 
+          right: '15px', 
+          top: '50%', 
+          transform: 'translateY(-50%)', 
+          background: '#fff', 
+          border: '1.5px solid #1e40af', 
+          borderRadius: '50%', 
+          width: 'clamp(32px, 8vw, 40px)', 
+          height: 'clamp(32px, 8vw, 40px)', 
+          fontSize: 'clamp(16px, 4vw, 22px)', 
+          color: '#1e40af', 
+          cursor: 'pointer', 
+          zIndex: 10, 
+          boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }} 
+        aria-label="Siguiente"
+      >
+        &#8594;
+      </button>
     </div>
   );
 } 
