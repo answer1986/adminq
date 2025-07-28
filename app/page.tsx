@@ -5,6 +5,7 @@ import ContactForm from '@/components/ContactForm';
 import EconomicIndicators from '@/components/EconomicIndicators';
 import MinvuSection from '@/components/MinvuSection';
 import QRModal from '@/components/QRModal';
+import BenefitCoverflow from '@/components/BenefitCoverflow';
 
 export default function Home() {
   const [isQRModalOpen, setIsQRModalOpen] = useState(false);
@@ -333,7 +334,71 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Servicios Integrales */}
+      {/* Formación y Certificación OS10 para Conserjes */}
+      <section style={{padding: '60px 20px', backgroundColor: '#fff7ed'}}>
+        <div style={{maxWidth: '1200px', margin: '0 auto'}}>
+          <h2 style={{
+            fontSize: 'clamp(2rem, 4vw, 3rem)',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            color: '#b45309',
+            marginBottom: '40px'
+          }}>
+            Formación y Certificación OS10 para Conserjes
+          </h2>
+          <div style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '40px',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <div style={{flex: 1, minWidth: '320px'}}>
+              <p style={{
+                color: '#92400e',
+                fontSize: '1.15rem',
+                lineHeight: '1.8',
+                marginBottom: '20px'
+              }}>
+                <strong>AdminQ</strong>, a través de su empresa asociada <strong>Quas Capacitación SpA</strong>, formará y certificará por ley a los conserjes del edificio en el curso <strong>OS-10</strong>, <span style={{color:'#f59e0b', fontWeight:'bold'}}>sin costo para la comunidad</span>.
+              </p>
+              <p style={{
+                color: '#b45309',
+                fontSize: '1.05rem',
+                marginBottom: '18px'
+              }}>
+                En Chile, la multa por no contar con el curso OS10 para conserjes o guardias de seguridad en edificios y condominios puede variar entre <strong>4 y 20 millones de pesos por empleado</strong>. Además, se pueden aplicar multas por no contar con la credencial del curso o por realizar funciones distintas a las de control de acceso, incluso con la certificación.
+              </p>
+              <ul style={{
+                color: '#b45309',
+                fontSize: '1.05rem',
+                marginBottom: '18px',
+                paddingLeft: '20px',
+                lineHeight: '1.7',
+                listStyle: 'disc'
+              }}>
+                <li>Formación y certificación OS10 sin costo para la comunidad.</li>
+                <li>Evita multas millonarias y sanciones legales.</li>
+                <li>Personal calificado y acreditado para funciones de seguridad.</li>
+                <li>Gestión integral de la capacitación y trámites.</li>
+              </ul>
+              <p style={{
+                color: '#92400e',
+                fontSize: '1.05rem',
+                marginBottom: '0'
+              }}>
+                <strong>¡Con AdminQ, tu condominio cumple la ley y protege su patrimonio!</strong>
+              </p>
+            </div>
+            <div style={{flex: 1, minWidth: '320px', textAlign: 'center'}}>
+              <img src="/images/condominio3.jpg" alt="Curso OS10 para conserjes" style={{maxWidth: '100%', borderRadius: '18px', boxShadow: '0 8px 32px rgba(245, 158, 11, 0.15)'}} />
+              <div style={{marginTop: '18px', color: '#b45309', fontWeight: 'bold', fontSize: '1.1rem'}}>Certificación OS10 obligatoria para conserjes</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Características y Beneficios - Coverflow */}
       <section style={{padding: '60px 20px', backgroundColor: '#ffffff'}}>
         <div style={{maxWidth: '1200px', margin: '0 auto'}}>
           <h2 style={{
@@ -343,75 +408,9 @@ export default function Home() {
             color: '#1f2937',
             marginBottom: '60px'
           }}>
-            Características y Atributos del Servicio
+            Características y Beneficios del Servicio
           </h2>
-          
-          <div style={{
-            background: 'linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%)',
-            padding: '40px',
-            borderRadius: '20px',
-            border: '3px solid #f59e0b',
-            boxShadow: '0 15px 35px rgba(245, 158, 11, 0.15)',
-            marginBottom: '50px'
-          }}>
-            <h3 style={{
-              fontSize: 'clamp(1.3rem, 3vw, 1.8rem)',
-              fontWeight: 'bold',
-              color: '#92400e',
-              marginBottom: '20px',
-              textAlign: 'center'
-            }}>
-              🏆 Pack Integral - Todo en Un Solo Servicio
-            </h3>
-            <p style={{
-              color: '#78350f',
-              fontSize: 'clamp(1rem, 2vw, 1.1rem)',
-              lineHeight: '1.8',
-              textAlign: 'center',
-              marginBottom: '30px'
-            }}>
-              Servicio integral diseñado para cumplir con todos los requisitos establecidos 
-              por la Nueva Ley de Administración de Condominios
-            </p>
-            
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-              gap: '20px'
-            }}>
-              {serviceFeatures.map((feature, index) => (
-                <div key={index} style={{
-                  background: 'rgba(255, 255, 255, 0.9)',
-                  padding: '25px',
-                  borderRadius: '15px',
-                  boxShadow: '0 8px 20px rgba(0, 0, 0, 0.1)'
-                }}>
-                  <h4 style={{
-                    fontSize: 'clamp(1.1rem, 2.5vw, 1.3rem)',
-                    fontWeight: 'bold',
-                    color: '#1e40af',
-                    marginBottom: '15px'
-                  }}>
-                    {feature.title}
-                  </h4>
-                  <ul style={{
-                    color: '#374151',
-                    lineHeight: '1.6',
-                    paddingLeft: '20px'
-                  }}>
-                    {feature.items.map((item, itemIndex) => (
-                      <li key={itemIndex} style={{
-                        marginBottom: '8px',
-                        fontSize: 'clamp(0.9rem, 2vw, 1rem)'
-                      }}>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </div>
+          <BenefitCoverflow />
         </div>
       </section>
 
