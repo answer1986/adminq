@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import ContactForm from '@/components/ContactForm';
 import EconomicIndicators from '@/components/EconomicIndicators';
 import MinvuSection from '@/components/MinvuSection';
@@ -46,37 +47,6 @@ export default function Home() {
       title: 'Certificación ISO 9001', 
       desc: 'Empresa certificada en norma ISO 9001 con procesos estandarizados, mejora continua y enfoque en satisfacción del cliente.', 
       color: '#06b6d4'
-    }
-  ];
-
-  const serviceFeatures = [
-    {
-      title: 'Administración Profesional Integral',
-      items: [
-        'Cumplimiento total de la Ley 21.442 y su reglamento',
-        'Asesoría contable incluida',
-        'Asesoría legal incluida',
-        'Asesoría en prevención de riesgos incluida',
-        'Metodología y estándar ISO 9001 aplicado'
-      ]
-    },
-    {
-      title: 'Servicios Opcionales de Seguridad',
-      items: [
-        'Sistemas de control de acceso de personas (reconocimiento facial, huella dactilar)',
-        'Ingreso por clave digital y acceso remoto smartphone',
-        'Control de acceso vehicular con cámaras lectoras de placas',
-        'Sistemas interconectados a conserjería'
-      ]
-    },
-    {
-      title: 'Tecnología Domótica',
-      items: [
-        'Gestión automatizada de estacionamientos',
-        'Apertura y cierre automatizado de portones',
-        'Sistemas de iluminación inteligente',
-        'Otros desarrollos personalizados según necesidades'
-      ]
     }
   ];
 
@@ -391,7 +361,7 @@ export default function Home() {
               </p>
             </div>
             <div style={{flex: 1, minWidth: '320px', textAlign: 'center'}}>
-              <img src="/images/condominio3.jpg" alt="Curso OS10 para conserjes" style={{maxWidth: '100%', borderRadius: '18px', boxShadow: '0 8px 32px rgba(245, 158, 11, 0.15)'}} />
+              <Image src="/images/condominio3.jpg" alt="Curso OS10 para conserjes" width={400} height={300} style={{borderRadius: '18px', boxShadow: '0 8px 32px rgba(245, 158, 11, 0.15)'}} />
               <div style={{marginTop: '18px', color: '#b45309', fontWeight: 'bold', fontSize: '1.1rem'}}>Certificación OS10 obligatoria para conserjes</div>
             </div>
           </div>

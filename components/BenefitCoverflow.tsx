@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 
 interface Benefit {
   image: string;
@@ -186,17 +187,16 @@ export default function BenefitCoverflow() {
                 background: '#f3f4f6', 
                 display: 'flex', 
                 alignItems: 'center', 
-                justifyContent: 'center' 
+                justifyContent: 'center',
+                position: 'relative'
               }}>
                 {benefit.image ? (
-                  <img 
+                  <Image 
                     src={benefit.image} 
                     alt={benefit.title} 
-                    style={{ 
-                      width: '100%', 
-                      height: '100%', 
-                      objectFit: 'cover' 
-                    }} 
+                    fill
+                    style={{ objectFit: 'cover' }}
+                    sizes="(max-width: 480px) 180px, (max-width: 768px) 220px, 260px"
                   />
                 ) : (
                   <span style={{ color: '#d1d5db', fontSize: 'clamp(20px, 4vw, 32px)' }}>Imagen</span>
