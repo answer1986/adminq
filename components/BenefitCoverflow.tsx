@@ -89,16 +89,135 @@ export default function BenefitCoverflow() {
     };
   }, [length]);
 
-  // Get responsive values based on screen size
+  // Mobile version - Simple card slider
+  if (screenSize === 'mobile') {
+    return (
+      <div style={{ 
+        width: '100%',
+        maxWidth: '100%',
+        margin: '0 auto',
+        padding: '30px',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        minHeight: '300px',
+        boxSizing: 'border-box'
+      }}>
+        {/* Single centered card - MÁS PEQUEÑA */}
+        <div style={{
+          width: '100%',
+          maxWidth: '200px',
+          background: '#fff',
+          borderRadius: '12px',
+          boxShadow: '0 8px 24px rgba(30,64,175,0.12)',
+          border: '2px solid #fbbf24',
+          overflow: 'hidden',
+          margin: '0 auto'
+        }}>
+          <div style={{
+            width: '100%',
+            height: '120px',
+            position: 'relative',
+            background: '#f3f4f6'
+          }}>
+            <Image 
+              src={benefits[current].image} 
+              alt={benefits[current].title} 
+              fill
+              style={{ objectFit: 'cover' }}
+              sizes="200px"
+            />
+          </div>
+          <div style={{
+            padding: '10px',
+            textAlign: 'center',
+            minHeight: '50px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <h3 style={{
+              fontSize: '0.75rem',
+              fontWeight: 700,
+              color: '#1e40af',
+              marginBottom: 0,
+              lineHeight: 1.2
+            }}>
+              {benefits[current].title}
+            </h3>
+          </div>
+        </div>
+        
+        {/* Navegación MÁS COMPACTA */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '8px',
+          marginTop: '12px',
+          width: '100%',
+          maxWidth: '180px'
+        }}>
+          <button 
+            onClick={prev} 
+            style={{ 
+              background: '#1e40af', 
+              border: 'none', 
+              borderRadius: '4px', 
+              width: '28px', 
+              height: '28px', 
+              fontSize: '12px', 
+              color: '#fff', 
+              cursor: 'pointer', 
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }} 
+            aria-label="Anterior"
+          >
+            &#8592;
+          </button>
+
+          <div style={{
+            background: '#f3f4f6',
+            borderRadius: '6px',
+            padding: '3px 6px',
+            fontSize: '0.7rem',
+            color: '#374151',
+            fontWeight: 600,
+            minWidth: '40px',
+            textAlign: 'center'
+          }}>
+            {current + 1}/{benefits.length}
+          </div>
+          
+          <button 
+            onClick={next} 
+            style={{ 
+              background: '#1e40af', 
+              border: 'none', 
+              borderRadius: '4px', 
+              width: '28px', 
+              height: '28px', 
+              fontSize: '12px', 
+              color: '#fff', 
+              cursor: 'pointer', 
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }} 
+            aria-label="Siguiente"
+          >
+            &#8594;
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // Get responsive values for tablet/desktop
   const getResponsiveValues = () => {
     switch (screenSize) {
-      case 'mobile':
-        return {
-          cardWidth: 180,
-          cardHeight: 240,
-          translateXBase: 60,
-          translateXSide: 80,
-        };
       case 'tablet':
         return {
           cardWidth: 220,
@@ -118,6 +237,7 @@ export default function BenefitCoverflow() {
 
   const responsiveValues = getResponsiveValues();
 
+  // Desktop/Tablet version - Coverflow effect
   return (
     <div style={{ 
       width: '100%', 
@@ -125,8 +245,8 @@ export default function BenefitCoverflow() {
       margin: '0 auto', 
       position: 'relative', 
       height: 'clamp(280px, 45vh, 360px)',
-      padding: '0 clamp(60px, 10vw, 80px)',
-      overflow: 'hidden'
+      padding: '0 60px', // Aumentado para dar espacio a los botones
+      overflow: 'visible'
     }}>
       <div style={{ 
         display: 'flex', 
@@ -141,7 +261,7 @@ export default function BenefitCoverflow() {
           let scale = 0.6;
           let zIndex = 1;
           let opacity = 0.3;
-          let translateX = offset * (responsiveValues.translateXBase * 0.8); // Reducir espaciado
+          let translateX = offset * (responsiveValues.translateXBase * 0.8);
           
           if (offset === 0) {
             scale = 1;
@@ -152,7 +272,7 @@ export default function BenefitCoverflow() {
             scale = 0.8;
             zIndex = 2;
             opacity = 0.7;
-            translateX = offset * (responsiveValues.translateXSide * 0.8); // Reducir espaciado
+            translateX = offset * (responsiveValues.translateXSide * 0.8);
           }
           
           return (
@@ -190,17 +310,13 @@ export default function BenefitCoverflow() {
                 justifyContent: 'center',
                 position: 'relative'
               }}>
-                {benefit.image ? (
-                  <Image 
-                    src={benefit.image} 
-                    alt={benefit.title} 
-                    fill
-                    style={{ objectFit: 'cover' }}
-                    sizes="(max-width: 480px) 180px, (max-width: 768px) 220px, 260px"
-                  />
-                ) : (
-                  <span style={{ color: '#d1d5db', fontSize: 'clamp(20px, 4vw, 32px)' }}>Imagen</span>
-                )}
+                <Image 
+                  src={benefit.image} 
+                  alt={benefit.title} 
+                  fill
+                  style={{ objectFit: 'cover' }}
+                  sizes="(max-width: 768px) 220px, 260px"
+                />
               </div>
               <div style={{ 
                 padding: 'clamp(16px, 3vw, 24px) clamp(12px, 2vw, 18px) clamp(12px, 2vw, 18px) clamp(12px, 2vw, 18px)', 
@@ -211,7 +327,7 @@ export default function BenefitCoverflow() {
                 justifyContent: 'center'
               }}>
                 <h3 style={{ 
-                  fontSize: 'clamp(0.8rem, 2.5vw, 1.1rem)', 
+                  fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)', 
                   fontWeight: 700, 
                   color: '#1e40af', 
                   marginBottom: 0,
@@ -225,20 +341,20 @@ export default function BenefitCoverflow() {
         })}
       </div>
       
-      {/* Navigation buttons */}
+      {/* Botones de navegación */}
       <button 
         onClick={prev} 
         style={{ 
           position: 'absolute', 
-          left: '15px', 
+          left: '10px', // Ajustado para quedar dentro
           top: '50%', 
           transform: 'translateY(-50%)', 
           background: '#fff', 
           border: '1.5px solid #1e40af', 
           borderRadius: '50%', 
-          width: 'clamp(32px, 8vw, 40px)', 
-          height: 'clamp(32px, 8vw, 40px)', 
-          fontSize: 'clamp(16px, 4vw, 22px)', 
+          width: '40px', 
+          height: '40px', 
+          fontSize: '22px', 
           color: '#1e40af', 
           cursor: 'pointer', 
           zIndex: 10, 
@@ -256,15 +372,15 @@ export default function BenefitCoverflow() {
         onClick={next} 
         style={{ 
           position: 'absolute', 
-          right: '15px', 
+          right: '10px', // Ajustado para quedar dentro
           top: '50%', 
           transform: 'translateY(-50%)', 
           background: '#fff', 
           border: '1.5px solid #1e40af', 
           borderRadius: '50%', 
-          width: 'clamp(32px, 8vw, 40px)', 
-          height: 'clamp(32px, 8vw, 40px)', 
-          fontSize: 'clamp(16px, 4vw, 22px)', 
+          width: '40px', 
+          height: '40px', 
+          fontSize: '22px', 
           color: '#1e40af', 
           cursor: 'pointer', 
           zIndex: 10, 

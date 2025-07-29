@@ -369,8 +369,16 @@ export default function Home() {
       </section>
 
       {/* Características y Beneficios - Coverflow */}
-      <section style={{padding: '60px 20px', backgroundColor: '#ffffff'}}>
-        <div style={{maxWidth: '1200px', margin: '0 auto'}}>
+      <section style={{
+        padding: '60px 60px', // Aumentado el padding horizontal para contener el botón next
+        backgroundColor: '#ffffff'
+      }}>
+        <div style={{
+          maxWidth: '1200px', 
+          margin: '0 auto',
+          position: 'relative',
+          overflow: 'hidden' // Asegura que nada se desborde
+        }}>
           <h2 style={{
             fontSize: 'clamp(2rem, 4vw, 3rem)',
             fontWeight: 'bold',
