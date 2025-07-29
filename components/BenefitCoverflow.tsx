@@ -244,15 +244,15 @@ export default function BenefitCoverflow() {
       maxWidth: '800px', 
       margin: '0 auto', 
       position: 'relative', 
-      height: 'clamp(280px, 45vh, 360px)',
-      padding: '0 60px', // Aumentado para dar espacio a los botones
+      height: 'clamp(400px, 50vh, 500px)', // Aumentado para dar más espacio
+      padding: '0 50px',
       overflow: 'visible'
     }}>
       <div style={{ 
         display: 'flex', 
         justifyContent: 'center', 
         alignItems: 'center', 
-        height: 'clamp(240px, 40vh, 320px)', 
+        height: '100%',
         position: 'relative',
         overflow: 'visible'
       }}>
@@ -281,33 +281,26 @@ export default function BenefitCoverflow() {
               style={{
                 position: 'absolute',
                 left: '50%',
-                top: 0,
-                transform: `translateX(-50%) translateX(${translateX}px) scale(${scale})`,
+                top: '50%',
+                transform: `translate(-50%, -50%) translateX(${translateX}px) scale(${scale})`,
                 zIndex,
                 opacity,
                 transition: 'all 0.5s cubic-bezier(.4,2,.3,1)',
-                width: responsiveValues.cardWidth,
-                height: responsiveValues.cardHeight,
-                boxShadow: offset === 0 ? '0 8px 32px rgba(30,64,175,0.18)' : '0 2px 8px rgba(0,0,0,0.08)',
-                borderRadius: 'clamp(12px, 2vw, 18px)',
+                width: '508px', // Tamaño fijo basado en la imagen
+                height: '280px', // Tamaño fijo basado en la imagen
                 background: '#fff',
+                borderRadius: '12px',
                 overflow: 'hidden',
                 cursor: offset === 0 ? 'default' : 'pointer',
-                border: offset === 0 ? '3px solid #fbbf24' : '1.5px solid #e5e7eb',
+                border: '2px solid #fbbf24',
                 display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'flex-end',
+                flexDirection: 'column'
               }}
               onClick={() => goTo(idx)}
             >
               <div style={{ 
-                width: '100%', 
-                height: 'clamp(120px, 35%, 200px)', 
-                background: '#f3f4f6', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center',
+                width: '100%',
+                height: '200px',
                 position: 'relative'
               }}>
                 <Image 
@@ -315,22 +308,23 @@ export default function BenefitCoverflow() {
                   alt={benefit.title} 
                   fill
                   style={{ objectFit: 'cover' }}
-                  sizes="(max-width: 768px) 220px, 260px"
+                  sizes="508px"
                 />
               </div>
               <div style={{ 
-                padding: 'clamp(16px, 3vw, 24px) clamp(12px, 2vw, 18px) clamp(12px, 2vw, 18px) clamp(12px, 2vw, 18px)', 
+                padding: '16px',
                 textAlign: 'center',
                 flex: 1,
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                background: '#fff'
               }}>
                 <h3 style={{ 
-                  fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)', 
-                  fontWeight: 700, 
-                  color: '#1e40af', 
-                  marginBottom: 0,
+                  fontSize: '1.1rem',
+                  fontWeight: 700,
+                  color: '#1e40af',
+                  margin: 0,
                   lineHeight: 1.3
                 }}>
                   {benefit.title}
@@ -342,57 +336,68 @@ export default function BenefitCoverflow() {
       </div>
       
       {/* Botones de navegación */}
-      <button 
-        onClick={prev} 
-        style={{ 
-          position: 'absolute', 
-          left: '10px', // Ajustado para quedar dentro
-          top: '50%', 
-          transform: 'translateY(-50%)', 
-          background: '#fff', 
-          border: '1.5px solid #1e40af', 
-          borderRadius: '50%', 
-          width: '40px', 
-          height: '40px', 
-          fontSize: '22px', 
-          color: '#1e40af', 
-          cursor: 'pointer', 
-          zIndex: 10, 
-          boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }} 
-        aria-label="Anterior"
-      >
-        &#8592;
-      </button>
-      
-      <button 
-        onClick={next} 
-        style={{ 
-          position: 'absolute', 
-          right: '10px', // Ajustado para quedar dentro
-          top: '50%', 
-          transform: 'translateY(-50%)', 
-          background: '#fff', 
-          border: '1.5px solid #1e40af', 
-          borderRadius: '50%', 
-          width: '40px', 
-          height: '40px', 
-          fontSize: '22px', 
-          color: '#1e40af', 
-          cursor: 'pointer', 
-          zIndex: 10, 
-          boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center'
-        }} 
-        aria-label="Siguiente"
-      >
-        &#8594;
-      </button>
+      <div style={{
+        position: 'absolute',
+        bottom: '10px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        display: 'flex',
+        gap: '10px',
+        alignItems: 'center',
+        background: '#fff',
+        padding: '8px 16px',
+        borderRadius: '20px',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+      }}>
+        <button 
+          onClick={prev} 
+          style={{ 
+            background: '#1e40af',
+            border: 'none',
+            borderRadius: '8px',
+            width: '32px',
+            height: '32px',
+            fontSize: '18px',
+            color: '#fff',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }} 
+          aria-label="Anterior"
+        >
+          &#8592;
+        </button>
+
+        <div style={{
+          fontSize: '0.9rem',
+          color: '#1e40af',
+          fontWeight: 600,
+          padding: '0 10px'
+        }}>
+          {current + 1}/{benefits.length}
+        </div>
+        
+        <button 
+          onClick={next} 
+          style={{ 
+            background: '#1e40af',
+            border: 'none',
+            borderRadius: '8px',
+            width: '32px',
+            height: '32px',
+            fontSize: '18px',
+            color: '#fff',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }} 
+          aria-label="Siguiente"
+        >
+          &#8594;
+        </button>
+      </div>
     </div>
   );
 } 
