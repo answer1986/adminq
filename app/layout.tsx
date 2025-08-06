@@ -126,15 +126,7 @@ export default function RootLayout({
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'AW-17416452794');
-          `}
-        </Script>
-
-        {/* Google Ads Conversion Tracking */}
-        <Script
-          id="google-ads-conversion"
-          strategy="afterInteractive"
-        >
-          {`
+            
             function gtag_report_conversion(url) {
               var callback = function () {
                 if (typeof(url) != 'undefined') {

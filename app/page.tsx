@@ -11,6 +11,9 @@ import BenefitCoverflow from '@/components/BenefitCoverflow';
 // Declaración de tipos para Google Ads
 declare global {
   function gtag_report_conversion(url?: string): boolean;
+  interface Window {
+    gtag: (...args: any[]) => void;
+  }
 }
 
 export default function Home() {
@@ -159,8 +162,17 @@ export default function Home() {
           }}>
             <button 
               onClick={() => {
+                // Tracking de conversión de Google Ads
+                if (typeof window !== 'undefined' && window.gtag) {
+                  window.gtag('event', 'conversion', {
+                    'send_to': 'AW-17416452794/AxJ4CMy-v_0aELr15_BA',
+                    'transaction_id': Date.now().toString(),
+                    'event_callback': function() {
+                      console.log('Conversión registrada en Google Ads');
+                    }
+                  });
+                }
                 setIsQRModalOpen(true);
-                gtag_report_conversion('/contacto');
               }}
               style={{
                 backgroundColor: '#f59e0b',
@@ -177,18 +189,33 @@ export default function Home() {
               }}>
               Solicitar Propuesta
             </button>
-            <button style={{
-              border: '3px solid white',
-              color: 'white',
-              backgroundColor: 'rgba(255, 255, 255, 0.1)',
-              fontWeight: 'bold',
-              padding: 'clamp(12px, 2vw, 16px) clamp(20px, 4vw, 40px)',
-              borderRadius: '12px',
-              fontSize: 'clamp(1rem, 2vw, 1.2rem)',
-              cursor: 'pointer',
-              transition: 'all 0.3s ease',
-              backdropFilter: 'blur(10px)'
-            }}>
+            <button 
+              onClick={() => {
+                // Tracking de conversión de Google Ads
+                if (typeof window !== 'undefined' && window.gtag) {
+                  window.gtag('event', 'conversion', {
+                    'send_to': 'AW-17416452794/AxJ4CMy-v_0aELr15_BA',
+                    'transaction_id': Date.now().toString(),
+                    'event_callback': function() {
+                      console.log('Conversión registrada en Google Ads - Portal');
+                    }
+                  });
+                }
+                // Aquí puedes agregar la URL del portal de transparencia
+                window.open('/portal', '_blank');
+              }}
+              style={{
+                border: '3px solid white',
+                color: 'white',
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                fontWeight: 'bold',
+                padding: 'clamp(12px, 2vw, 16px) clamp(20px, 4vw, 40px)',
+                borderRadius: '12px',
+                fontSize: 'clamp(1rem, 2vw, 1.2rem)',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                backdropFilter: 'blur(10px)'
+              }}>
               Portal de Transparencia
             </button>
           </div>
