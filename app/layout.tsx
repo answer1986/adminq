@@ -125,9 +125,13 @@ export default function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'AW-17416452794');
+            gtag('config', 'AW-17416452794', {
+              'send_page_view': true,
+              'anonymize_ip': true
+            });
             
-            function gtag_report_conversion(url) {
+            // Función global para reportar conversiones
+            window.gtag_report_conversion = function(url) {
               var callback = function () {
                 if (typeof(url) != 'undefined') {
                   window.location = url;
@@ -135,11 +139,14 @@ export default function RootLayout({
               };
               gtag('event', 'conversion', {
                   'send_to': 'AW-17416452794/AxJ4CMy-v_0aELr15_BA',
-                  'transaction_id': '',
+                  'transaction_id': Date.now().toString(),
                   'event_callback': callback
               });
               return false;
-            }
+            };
+            
+            // Verificar que gtag está disponible
+            console.log('Google Ads gtag cargado correctamente');
           `}
         </Script>
 

@@ -1,23 +1,40 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import ContactForm from '@/components/ContactForm';
 import EconomicIndicators from '@/components/EconomicIndicators';
 import MinvuSection from '@/components/MinvuSection';
 import QRModal from '@/components/QRModal';
 import BenefitCoverflow from '@/components/BenefitCoverflow';
+import { trackConversion as trackGoogleConversion, isGoogleAdsAvailable } from '@/utils/googleAds';
 
 // Declaración de tipos para Google Ads
 declare global {
   function gtag_report_conversion(url?: string): boolean;
   interface Window {
     gtag: (...args: unknown[]) => void;
+    gtag_report_conversion: (url?: string) => boolean;
   }
 }
 
 export default function Home() {
   const [isQRModalOpen, setIsQRModalOpen] = useState(false);
+
+  // Verificar que Google Ads se cargue correctamente
+  useEffect(() => {
+    const checkGoogleAds = () => {
+      if (isGoogleAdsAvailable()) {
+        console.log('✅ Google Ads gtag está disponible');
+      } else {
+        console.warn('❌ Google Ads gtag no está disponible');
+      }
+    };
+
+    // Verificar después de un breve delay para asegurar que el script se haya cargado
+    const timer = setTimeout(checkGoogleAds, 2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const services = [
     {
@@ -161,19 +178,10 @@ export default function Home() {
             flexWrap: 'wrap'
           }}>
             <button 
-              onClick={() => {
-                // Tracking de conversión de Google Ads
-                if (typeof window !== 'undefined' && window.gtag) {
-                  window.gtag('event', 'conversion', {
-                    'send_to': 'AW-17416452794/AxJ4CMy-v_0aELr15_BA',
-                    'transaction_id': Date.now().toString(),
-                    'event_callback': function() {
-                      console.log('Conversión registrada en Google Ads');
-                    }
-                  });
-                }
-                setIsQRModalOpen(true);
-              }}
+                              onClick={() => {
+                  trackGoogleConversion('Solicitar Propuesta');
+                  setIsQRModalOpen(true);
+                }}
               style={{
                 backgroundColor: '#f59e0b',
                 color: '#1e40af',
@@ -191,16 +199,7 @@ export default function Home() {
             </button>
             <button 
               onClick={() => {
-                // Tracking de conversión de Google Ads
-                if (typeof window !== 'undefined' && window.gtag) {
-                  window.gtag('event', 'conversion', {
-                    'send_to': 'AW-17416452794/AxJ4CMy-v_0aELr15_BA',
-                    'transaction_id': Date.now().toString(),
-                    'event_callback': function() {
-                      console.log('Conversión registrada en Google Ads - Portal');
-                    }
-                  });
-                }
+                trackGoogleConversion('Portal de Transparencia');
                 // Aquí puedes agregar la URL del portal de transparencia
                 window.open('/portal', '_blank');
               }}
@@ -889,7 +888,10 @@ export default function Home() {
             </div>
           </div>
           <button 
-            onClick={() => setIsQRModalOpen(true)}
+            onClick={() => {
+              trackGoogleConversion('Solicitar Cotización');
+              setIsQRModalOpen(true);
+            }}
             style={{
               background: 'linear-gradient(135deg, #f59e0b 0%, #f97316 100%)',
               color: '#1e40af',
@@ -915,3 +917,5 @@ export default function Home() {
     </div>
   );
 }
+
+
