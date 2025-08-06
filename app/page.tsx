@@ -12,7 +12,7 @@ import BenefitCoverflow from '@/components/BenefitCoverflow';
 declare global {
   function gtag_report_conversion(url?: string): boolean;
   interface Window {
-    gtag: (...args: any[]) => void;
+    gtag: (...args: unknown[]) => void;
   }
 }
 
