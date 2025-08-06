@@ -112,6 +112,45 @@ export default function RootLayout({
         <meta property="business:contact_data:phone_number" content="+56974532868" />
         <meta property="business:contact_data:website" content="https://www.adminq.cl" />
         
+        {/* Google Ads Tag */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=AW-17416452794"
+          strategy="afterInteractive"
+        />
+        <Script
+          id="google-ads"
+          strategy="afterInteractive"
+        >
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'AW-17416452794');
+          `}
+        </Script>
+
+        {/* Google Ads Conversion Tracking */}
+        <Script
+          id="google-ads-conversion"
+          strategy="afterInteractive"
+        >
+          {`
+            function gtag_report_conversion(url) {
+              var callback = function () {
+                if (typeof(url) != 'undefined') {
+                  window.location = url;
+                }
+              };
+              gtag('event', 'conversion', {
+                  'send_to': 'AW-17416452794/AxJ4CMy-v_0aELr15_BA',
+                  'transaction_id': '',
+                  'event_callback': callback
+              });
+              return false;
+            }
+          `}
+        </Script>
+
         {/* Datos estructurados JSON-LD */}
         <Script
           id="json-ld"

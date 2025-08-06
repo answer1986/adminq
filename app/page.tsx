@@ -8,6 +8,11 @@ import MinvuSection from '@/components/MinvuSection';
 import QRModal from '@/components/QRModal';
 import BenefitCoverflow from '@/components/BenefitCoverflow';
 
+// Declaración de tipos para Google Ads
+declare global {
+  function gtag_report_conversion(url?: string): boolean;
+}
+
 export default function Home() {
   const [isQRModalOpen, setIsQRModalOpen] = useState(false);
 
@@ -153,7 +158,10 @@ export default function Home() {
             flexWrap: 'wrap'
           }}>
             <button 
-              onClick={() => setIsQRModalOpen(true)}
+              onClick={() => {
+                setIsQRModalOpen(true);
+                gtag_report_conversion('/contacto');
+              }}
               style={{
                 backgroundColor: '#f59e0b',
                 color: '#1e40af',
