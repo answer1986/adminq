@@ -177,18 +177,25 @@ export default function Home() {
             justifyContent: 'center', 
             flexWrap: 'wrap'
           }}>
-            <button 
+           <button 
   onClick={() => {
-    // Tu función existente
-    trackGoogleConversion('Solicitar Propuesta');
-    
-    // Función global de Google como respaldo
-    if (typeof window !== 'undefined' && window.gtag_report_conversion) {
-      window.gtag_report_conversion();
+    try {
+      // 1. Dispara tu conversión personalizada
+      trackGoogleConversion('Solicitar Propuesta');
+      
+      // 2. Dispara el método oficial de Google (si existe)
+      if (typeof window !== 'undefined' && window.gtag_report_conversion) {
+        window.gtag_report_conversion();
+      }
+      
+      // 3. Abre el modal como en tu versión original
+      setIsQRModalOpen(true);
+      
+    } catch (error) {
+      console.error('Error en seguimiento de conversión:', error);
+      // Fallback: Abrir el modal aunque falle el tracking
+      setIsQRModalOpen(true);
     }
-    
-    // Tu lógica existente
-    setIsQRModalOpen(true);
   }}
               style={{
                 backgroundColor: '#f59e0b',
