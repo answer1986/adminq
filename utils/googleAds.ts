@@ -9,29 +9,38 @@ export const isGoogleAdsAvailable = (): boolean => {
 };
 
 // Función para registrar conversiones
-export const trackConversion = (action: string, value?: number): void => {
-  if (!isGoogleAdsAvailable()) {
+export const trackConversion = (action: string, value?: number, url?: string): void => {
+  if (typeof window === 'undefined') return;
+  
+  if (!window.gtag) {
     console.warn('Google Ads gtag no está disponible');
     return;
   }
 
-  console.log(`Intentando registrar conversión: ${action}`);
-  
-  const conversionData: any = {
-    'send_to': CONVERSION_ID,
-    'transaction_id': Date.now().toString(),
-    'event_callback': function() {
-      console.log(`Conversión registrada exitosamente en Google Ads - ${action}`);
+  try {
+    const conversionData: any = {
+      'send_to': 'AW-17416452794/AxJ4CMy-v_0aELr15_BA',
+      'transaction_id': `adminq_${Date.now()}`,
+      'event_callback': function() {
+        console.log(`Conversión ${action} registrada`);
+        if (url) window.location.href = url;
+      }
+    };
+
+    if (value) {
+      conversionData.value = value;
+      conversionData.currency = 'CLP';
     }
-  };
 
-  // Agregar valor si se proporciona
-  if (value) {
-    conversionData.value = value;
-    conversionData.currency = 'CLP';
+    window.gtag('event', 'conversion', conversionData);
+    
+    // También llamamos a la función global como respaldo
+    if (window.gtag_report_conversion) {
+      window.gtag_report_conversion(url);
+    }
+  } catch (error) {
+    console.error('Error al registrar conversión:', error);
   }
-
-  window.gtag('event', 'conversion', conversionData);
 };
 
 // Función para registrar eventos personalizados

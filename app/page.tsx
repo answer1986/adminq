@@ -178,10 +178,18 @@ export default function Home() {
             flexWrap: 'wrap'
           }}>
             <button 
-                              onClick={() => {
-                  trackGoogleConversion('Solicitar Propuesta');
-                  setIsQRModalOpen(true);
-                }}
+  onClick={() => {
+    // Tu función existente
+    trackGoogleConversion('Solicitar Propuesta');
+    
+    // Función global de Google como respaldo
+    if (typeof window !== 'undefined' && window.gtag_report_conversion) {
+      window.gtag_report_conversion();
+    }
+    
+    // Tu lógica existente
+    setIsQRModalOpen(true);
+  }}
               style={{
                 backgroundColor: '#f59e0b',
                 color: '#1e40af',
