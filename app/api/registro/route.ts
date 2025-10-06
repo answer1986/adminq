@@ -29,6 +29,8 @@ async function verifyRecaptcha(token: string) {
 }
 
 export async function POST(request: NextRequest) {
+  console.log('🚀 Starting registration API call');
+
   try {
     // Parse form data
     const form = formidable({
@@ -36,8 +38,10 @@ export async function POST(request: NextRequest) {
       keepExtensions: true,
     });
 
+    console.log('📝 Parsing form data...');
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [fields, files] = await form.parse(request as any);
+    console.log('✅ Form data parsed successfully');
 
     const apartmentNumber = fields.apartmentNumber?.[0];
     const headName = fields.headName?.[0];
@@ -47,9 +51,22 @@ export async function POST(request: NextRequest) {
     const comments = fields.comments?.[0];
     const recaptchaToken = fields.recaptchaToken?.[0];
 
+    console.log('📋 Extracted fields:', {
+      apartmentNumber,
+      headName,
+      headEmail,
+      headPhone: headPhone ? 'present' : 'missing',
+      headPassword: headPassword ? 'present' : 'missing',
+      comments,
+      recaptchaToken: recaptchaToken ? 'present' : 'missing'
+    });
+
+    console.log('🔐 Verifying reCAPTCHA...');
     if (!recaptchaToken || !(await verifyRecaptcha(recaptchaToken))) {
+      console.log('❌ reCAPTCHA verification failed');
       return NextResponse.json({ error: 'Invalid reCAPTCHA' }, { status: 400 });
     }
+    console.log('✅ reCAPTCHA verified successfully');
 
     // Collect additional members
     const additionalMembers = [];
@@ -70,14 +87,34 @@ export async function POST(request: NextRequest) {
     }
 
     // Connect to database
+    console.log('🗄️ Connecting to database...');
+    console.log('DB Config:', {
+      host: process.env.DB_HOST || 'localhost',
+      user: process.env.DB_USER || 'root',
+      database: process.env.DB_NAME || 'adminq',
+      password: process.env.DB_PASSWORD ? 'present' : 'missing'
+    });
+
     const connection = await mysql.createConnection({
       host: process.env.DB_HOST || 'localhost',
       user: process.env.DB_USER || 'root',
       password: process.env.DB_PASSWORD || '',
       database: process.env.DB_NAME || 'adminq',
     });
+    console.log('✅ Database connected successfully');
 
     // Insert into single table adminq
+    console.log('💾 Inserting data into adminq table...');
+    const insertData = [
+      apartmentNumber, headName, headEmail, headPhone, headPassword, files.member0Photo?.[0]?.filepath || null,
+      additionalMembers[0]?.name || null, additionalMembers[0]?.email || null, additionalMembers[0]?.phone || null, additionalMembers[0]?.photoPath || null,
+      additionalMembers[1]?.name || null, additionalMembers[1]?.email || null, additionalMembers[1]?.phone || null, additionalMembers[1]?.photoPath || null,
+      additionalMembers[2]?.name || null, additionalMembers[2]?.email || null, additionalMembers[2]?.phone || null, additionalMembers[2]?.photoPath || null,
+      additionalMembers[3]?.name || null, additionalMembers[3]?.email || null, additionalMembers[3]?.phone || null, additionalMembers[3]?.photoPath || null,
+      comments
+    ];
+    console.log('Insert data preview:', insertData.map((item, index) => `${index}: ${item ? 'present' : 'null'}`));
+
     await connection.execute(
       `INSERT INTO adminq (
         apartment_number, head_name, head_email, head_phone, head_password, head_photo_path,
@@ -87,21 +124,28 @@ export async function POST(request: NextRequest) {
         member4_name, member4_email, member4_phone, member4_photo_path,
         comments
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [
-        apartmentNumber, headName, headEmail, headPhone, headPassword, files.member0Photo?.[0]?.filepath || null,
-        additionalMembers[0]?.name || null, additionalMembers[0]?.email || null, additionalMembers[0]?.phone || null, additionalMembers[0]?.photoPath || null,
-        additionalMembers[1]?.name || null, additionalMembers[1]?.email || null, additionalMembers[1]?.phone || null, additionalMembers[1]?.photoPath || null,
-        additionalMembers[2]?.name || null, additionalMembers[2]?.email || null, additionalMembers[2]?.phone || null, additionalMembers[2]?.photoPath || null,
-        additionalMembers[3]?.name || null, additionalMembers[3]?.email || null, additionalMembers[3]?.phone || null, additionalMembers[3]?.photoPath || null,
-        comments
-      ]
+      insertData
     );
+    console.log('✅ Data inserted successfully');
 
     await connection.end();
+    console.log('🔌 Database connection closed');
 
+    console.log('🎉 Registration completed successfully');
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error('❌ Registration API Error:', error);
+    console.error('Error details:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : 'No stack trace',
+      code: (error as any)?.code,
+      errno: (error as any)?.errno,
+      sqlState: (error as any)?.sqlState,
+      sqlMessage: (error as any)?.sqlMessage
+    });
+    return NextResponse.json({
+      error: 'Internal server error',
+      details: error instanceof Error ? error.message : 'Unknown error'
+    }, { status: 500 });
   }
 }
