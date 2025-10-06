@@ -50,9 +50,12 @@ export default function RegistrationForm() {
 
   // Interfaz para los errores de validación
   interface ValidationErrors {
-    name?: string;
-    email?: string;
-    phone?: string;
+    headName?: string;
+    headEmail?: string;
+    headPhone?: string;
+    memberName?: { [key: number]: string };
+    memberEmail?: { [key: number]: string };
+    memberPhone?: { [key: number]: string };
   }
 
   const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
@@ -501,12 +504,28 @@ export default function RegistrationForm() {
                   value={member.name}
                   onChange={(e) => {
                     const value = e.target.value;
-                    if (validateNameInput(value)) {
+                    const error = validateNameInput(value);
+                    setValidationErrors(prev => ({
+                      ...prev,
+                      memberName: { ...(prev.memberName || {}), [index]: error }
+                    }));
+                    if (!error) {
                       updateAdditionalMember(index, 'name', value);
                     }
                   }}
-                  style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px', marginBottom: '5px' }}
+                  style={{ 
+                    width: '100%', 
+                    padding: '8px', 
+                    border: `1px solid ${validationErrors.memberName?.[index] ? '#dc3545' : '#ccc'}`,
+                    borderRadius: '4px',
+                    marginBottom: validationErrors.memberName?.[index] ? '2px' : '5px'
+                  }}
                 />
+                {validationErrors.memberName?.[index] && (
+                  <div style={{ color: '#dc3545', fontSize: '0.875rem', marginBottom: '5px' }}>
+                    {validationErrors.memberName[index]}
+                  </div>
+                )}
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '10px' }}>
