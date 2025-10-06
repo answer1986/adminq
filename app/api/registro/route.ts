@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import formidable from 'formidable';
 import path from 'path';
+import fs from 'fs';
 import mysql from 'mysql2/promise';
 
 // Disable body parsing for file uploads
@@ -29,6 +30,9 @@ async function verifyRecaptcha(token: string) {
 }
 
 export async function POST(request: NextRequest) {
+  const timestamp = new Date().toISOString();
+  const logMessage = `[${timestamp}] 🚀 Starting registration API call\n`;
+  fs.appendFileSync('logs/registration.log', logMessage);
   console.log('🚀 Starting registration API call');
 
   try {
@@ -132,33 +136,23 @@ export async function POST(request: NextRequest) {
     console.log('🔌 Database connection closed');
 
     console.log('🎉 Registration completed successfully');
+    const successLog = `[${new Date().toISOString()}] ✅ Registration completed successfully\n`;
+    fs.appendFileSync('logs/registration.log', successLog);
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('❌ Registration API Error:', error);
+    const errorTimestamp = new Date().toISOString();
+    console.error('❌ Registration API Error occurred');
+    console.error('Error type:', typeof error);
+    console.error('Error value:', error);
 
-    // Safe error logging
-    let errorMessage = 'Unknown error';
-    let errorDetails = {};
+    // Log to file
+    const errorLog = `[${errorTimestamp}] ❌ ERROR: ${typeof error} - ${String(error)}\n`;
+    fs.appendFileSync('logs/registration.log', errorLog);
 
-    if (error instanceof Error) {
-      errorMessage = error.message;
-      errorDetails = {
-        name: error.name,
-        message: error.message,
-        stack: error.stack
-      };
-    } else if (typeof error === 'object' && error !== null) {
-      // Handle MySQL errors or other objects
-      errorDetails = error;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      errorMessage = (error as any).message || (error as any).sqlMessage || 'Database error';
-    }
-
-    console.error('Error details:', errorDetails);
-
+    // Very simple error response
     return NextResponse.json({
       error: 'Internal server error',
-      details: errorMessage
+      timestamp: errorTimestamp
     }, { status: 500 });
   }
 }
