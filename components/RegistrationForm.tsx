@@ -47,6 +47,23 @@ export default function RegistrationForm() {
   const [headPassword, setHeadPassword] = useState('');
   const [headName, setHeadName] = useState('');
   const [headPhoto, setHeadPhoto] = useState<File | null>(null);
+
+  const validateNameInput = (value: string) => {
+    // Only allow letters, spaces, and accented characters
+    return /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/.test(value);
+  };
+
+  const validatePhoneInput = (value: string) => {
+    // Only allow numbers, spaces, hyphens, and parentheses
+    return /^[0-9\s\-\(\)]*$/.test(value);
+  };
+
+  const handleNameChange = (setter: (value: string) => void) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (validateNameInput(value)) {
+      setter(value);
+    }
+  };
   const [additionalMembers, setAdditionalMembers] = useState<Member[]>([]);
   const [comments, setComments] = useState('');
   const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
@@ -309,14 +326,14 @@ export default function RegistrationForm() {
               type="text"
               placeholder="Nombre completo *"
               value={headName}
-              onChange={(e) => setHeadName(e.target.value)}
+              onChange={handleNameChange(setHeadName)}
               required
               style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px', marginBottom: '5px' }}
             />
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '10px' }}>
             <input
-              type="text"
+              type="email"
               placeholder="Email *"
               value={headEmail}
               onChange={(e) => setHeadEmail(e.target.value)}
@@ -327,7 +344,12 @@ export default function RegistrationForm() {
               type="text"
               placeholder="Teléfono *"
               value={headPhone}
-              onChange={(e) => setHeadPhone(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (validatePhoneInput(value)) {
+                  setHeadPhone(value);
+                }
+              }}
               required
               style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}
             />
@@ -404,7 +426,12 @@ export default function RegistrationForm() {
                   type="text"
                   placeholder="Nombre completo"
                   value={member.name}
-                  onChange={(e) => updateAdditionalMember(index, 'name', e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (validateNameInput(value)) {
+                      updateAdditionalMember(index, 'name', value);
+                    }
+                  }}
                   style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px', marginBottom: '5px' }}
                 />
               </div>
@@ -421,7 +448,12 @@ export default function RegistrationForm() {
                   type="text"
                   placeholder="Teléfono"
                   value={member.phone}
-                  onChange={(e) => updateAdditionalMember(index, 'phone', e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    if (validatePhoneInput(value)) {
+                      updateAdditionalMember(index, 'phone', value);
+                    }
+                  }}
                   style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}
                 />
               </div>
