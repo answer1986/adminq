@@ -167,12 +167,16 @@ export default function RegistrationForm() {
     });
 
     try {
+      console.log('📤 Enviando formulario de registro...');
       const response = await fetch('/api/registro', {
         method: 'POST',
         body: formData,
       });
 
+      console.log('📥 Respuesta del servidor:', response.status, response.statusText);
+
       if (response.ok) {
+        console.log('✅ Registro exitoso');
         alert('Registro exitoso');
         // Reset form
         setApartmentNumber('');
@@ -187,11 +191,13 @@ export default function RegistrationForm() {
         setRecaptchaToken(null);
         setShowForm(false);
       } else {
-        alert('Error en el registro');
+        const errorText = await response.text();
+        console.error('❌ Error en registro:', response.status, errorText);
+        alert(`Error en el registro: ${response.status}`);
       }
     } catch (error) {
-      console.error('Error:', error);
-      alert('Error en el registro');
+      console.error('💥 Error de red:', error);
+      alert('Error de conexión. Revisa la consola para más detalles.');
     } finally {
       setIsSubmitting(false);
     }
@@ -310,7 +316,7 @@ export default function RegistrationForm() {
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '10px' }}>
             <input
-              type="email"
+              type="text"
               placeholder="Email *"
               value={headEmail}
               onChange={(e) => setHeadEmail(e.target.value)}
@@ -318,7 +324,7 @@ export default function RegistrationForm() {
               style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}
             />
             <input
-              type="tel"
+              type="text"
               placeholder="Teléfono *"
               value={headPhone}
               onChange={(e) => setHeadPhone(e.target.value)}
@@ -405,14 +411,14 @@ export default function RegistrationForm() {
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '10px' }}>
                 <input
-                  type="email"
+                  type="text"
                   placeholder="Email"
                   value={member.email}
                   onChange={(e) => updateAdditionalMember(index, 'email', e.target.value)}
                   style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}
                 />
                 <input
-                  type="tel"
+                  type="text"
                   placeholder="Teléfono"
                   value={member.phone}
                   onChange={(e) => updateAdditionalMember(index, 'phone', e.target.value)}
