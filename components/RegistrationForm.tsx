@@ -48,19 +48,57 @@ export default function RegistrationForm() {
   const [headName, setHeadName] = useState('');
   const [headPhoto, setHeadPhoto] = useState<File | null>(null);
 
+  // Interfaz para los errores de validación
+  interface ValidationErrors {
+    name?: string;
+    email?: string;
+    phone?: string;
+  }
+
+  const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
+
   const validateNameInput = (value: string) => {
-    // Only allow letters, spaces, and accented characters
-    return /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/.test(value);
+    // Validar que solo contenga letras, espacios y caracteres acentuados
+    if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]*$/.test(value)) {
+      return 'El nombre solo puede contener letras y espacios';
+    }
+    // Validar longitud mínima (2 caracteres)
+    if (value.length < 2) {
+      return 'El nombre debe tener al menos 2 caracteres';
+    }
+    // Validar que no tenga espacios al inicio o final
+    if (value.trim() !== value) {
+      return 'El nombre no puede comenzar o terminar con espacios';
+    }
+    return '';
+  };
+
+  const validateEmailInput = (value: string) => {
+    // Expresión regular para validar email
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!emailRegex.test(value)) {
+      return 'Por favor ingresa un email válido';
+    }
+    return '';
   };
 
   const validatePhoneInput = (value: string) => {
-    // Only allow numbers, spaces, hyphens, and parentheses
-    return /^[0-9\s\-\(\)]*$/.test(value);
+    // Limpiar el número de teléfono de espacios y guiones
+    const cleanPhone = value.replace(/[\s\-]/g, '');
+    
+    // Validar que solo contenga números y tenga la longitud correcta
+    if (!/^\d{9,12}$/.test(cleanPhone)) {
+      return 'El teléfono debe tener entre 9 y 12 dígitos';
+    }
+    
+    return '';
   };
 
-  const handleNameChange = (setter: (value: string) => void) => (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleNameChange = (setter: (value: string) => void, field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    if (validateNameInput(value)) {
+    const error = validateNameInput(value);
+    setValidationErrors(prev => ({ ...prev, [field]: error }));
+    if (!error) {
       setter(value);
     }
   };
@@ -326,33 +364,68 @@ export default function RegistrationForm() {
               type="text"
               placeholder="Nombre completo *"
               value={headName}
-              onChange={handleNameChange(setHeadName)}
-              required
-              style={{ width: '100%', padding: '8px', border: '1px solid #ccc', borderRadius: '4px', marginBottom: '5px' }}
+              onChange={handleNameChange(setHeadName, 'headName')}
+              style={{ 
+                width: '100%', 
+                padding: '8px', 
+                border: `1px solid ${validationErrors.headName ? '#dc3545' : '#ccc'}`, 
+                borderRadius: '4px', 
+                marginBottom: validationErrors.headName ? '2px' : '5px' 
+              }}
             />
+            {validationErrors.headName && (
+              <div style={{ color: '#dc3545', fontSize: '0.875rem', marginBottom: '5px' }}>
+                {validationErrors.headName}
+              </div>
+            )}
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '10px' }}>
             <input
               type="email"
               placeholder="Email *"
               value={headEmail}
-              onChange={(e) => setHeadEmail(e.target.value)}
-              required
-              style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}
+              onChange={(e) => {
+                const value = e.target.value;
+                const error = validateEmailInput(value);
+                setValidationErrors(prev => ({ ...prev, headEmail: error }));
+                if (!error) {
+                  setHeadEmail(value);
+                }
+              }}
+              style={{ 
+                padding: '8px', 
+                border: `1px solid ${validationErrors.headEmail ? '#dc3545' : '#ccc'}`,
+                borderRadius: '4px'
+              }}
             />
+            {validationErrors.headEmail && (
+              <div style={{ color: '#dc3545', fontSize: '0.875rem', marginTop: '2px' }}>
+                {validationErrors.headEmail}
+              </div>
+            )}
             <input
               type="text"
               placeholder="Teléfono *"
               value={headPhone}
               onChange={(e) => {
                 const value = e.target.value;
-                if (validatePhoneInput(value)) {
+                const error = validatePhoneInput(value);
+                setValidationErrors(prev => ({ ...prev, headPhone: error }));
+                if (!error) {
                   setHeadPhone(value);
                 }
               }}
-              required
-              style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}
+              style={{ 
+                padding: '8px', 
+                border: `1px solid ${validationErrors.headPhone ? '#dc3545' : '#ccc'}`,
+                borderRadius: '4px'
+              }}
             />
+            {validationErrors.headPhone && (
+              <div style={{ color: '#dc3545', fontSize: '0.875rem', marginTop: '2px' }}>
+                {validationErrors.headPhone}
+              </div>
+            )}
           </div>
           <input
             type="password"
