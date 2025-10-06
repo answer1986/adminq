@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { writeFile } from 'fs/promises';
 import { join } from 'path';
-import pool from '@/utils/db';
+import pool from '../../../utils/db';
 
 export async function POST(request: Request) {
   console.log('🚀 Starting registration API call');
