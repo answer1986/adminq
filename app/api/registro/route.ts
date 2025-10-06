@@ -37,7 +37,7 @@ export async function POST(request: Request) {
       // Insertar residente principal
       const [result] = await connection.execute(
         'INSERT INTO residents (apartment_number, head_name, head_email, head_phone, head_password, comments) VALUES (?, ?, ?, ?, ?, ?)',
-        [apartmentNumber, headName, headEmail, headPhone, headPassword, comments]
+        [apartmentNumber, headName, headEmail, headPhone, headPassword, comments || null]
       );
 
       const residentId = (result as { insertId: number }).insertId;
@@ -65,7 +65,7 @@ export async function POST(request: Request) {
         
         if (memberName && (memberEmail || memberPhone)) {
           const [memberResult] = await connection.execute(
-            'INSERT INTO household_members (resident_id, name, email, phone) VALUES (?, ?, ?, ?)',
+            'INSERT INTO residents_members (resident_id, name, email, phone) VALUES (?, ?, ?, ?)',
             [residentId, memberName, memberEmail || null, memberPhone || null]
           );
 
@@ -78,9 +78,9 @@ export async function POST(request: Request) {
             const photoPath = `/uploads/member_${memberId}.jpg`;
             await writeFile(join(process.cwd(), 'public', photoPath), photoBuffer);
 
-            // Actualizar ruta de la foto
+            // Actualizar ruta de la foto en la base de datos
             await connection.execute(
-              'UPDATE household_members SET photo_path = ? WHERE id = ?',
+              'UPDATE residents_members SET photo_path = ? WHERE id = ?',
               [photoPath, memberId]
             );
           }
