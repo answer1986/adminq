@@ -138,9 +138,13 @@ export async function POST(request: NextRequest) {
     console.error('Error details:', {
       message: error instanceof Error ? error.message : 'Unknown error',
       stack: error instanceof Error ? error.stack : 'No stack trace',
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       code: (error as any)?.code,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       errno: (error as any)?.errno,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       sqlState: (error as any)?.sqlState,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       sqlMessage: (error as any)?.sqlMessage
     });
     return NextResponse.json({
