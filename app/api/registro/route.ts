@@ -135,21 +135,30 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error('❌ Registration API Error:', error);
-    console.error('Error details:', {
-      message: error instanceof Error ? error.message : 'Unknown error',
-      stack: error instanceof Error ? error.stack : 'No stack trace',
+
+    // Safe error logging
+    let errorMessage = 'Unknown error';
+    let errorDetails = {};
+
+    if (error instanceof Error) {
+      errorMessage = error.message;
+      errorDetails = {
+        name: error.name,
+        message: error.message,
+        stack: error.stack
+      };
+    } else if (typeof error === 'object' && error !== null) {
+      // Handle MySQL errors or other objects
+      errorDetails = error;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      code: (error as any)?.code,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      errno: (error as any)?.errno,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      sqlState: (error as any)?.sqlState,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      sqlMessage: (error as any)?.sqlMessage
-    });
+      errorMessage = (error as any).message || (error as any).sqlMessage || 'Database error';
+    }
+
+    console.error('Error details:', errorDetails);
+
     return NextResponse.json({
       error: 'Internal server error',
-      details: error instanceof Error ? error.message : 'Unknown error'
+      details: errorMessage
     }, { status: 500 });
   }
 }
