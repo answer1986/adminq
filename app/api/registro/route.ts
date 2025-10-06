@@ -46,7 +46,7 @@ export async function POST(request: Request) {
       const headPhoto = formData.get('member0Photo') as File;
       if (headPhoto) {
         const photoBuffer = Buffer.from(await headPhoto.arrayBuffer());
-        const photoPath = \`/uploads/resident_\${residentId}_head.jpg\`;
+        const photoPath = `/uploads/resident_${residentId}_head.jpg`;
         await writeFile(join(process.cwd(), 'public', photoPath), photoBuffer);
 
         // Actualizar ruta de la foto en la base de datos
@@ -58,10 +58,10 @@ export async function POST(request: Request) {
 
       // Procesar miembros adicionales
       let memberIndex = 1;
-      while (formData.get(\`member\${memberIndex}Name\`)) {
-        const memberName = formData.get(\`member\${memberIndex}Name\`) as string;
-        const memberEmail = formData.get(\`member\${memberIndex}Email\`) as string;
-        const memberPhone = formData.get(\`member\${memberIndex}Phone\`) as string;
+      while (formData.get(`member${memberIndex}Name`)) {
+        const memberName = formData.get(`member${memberIndex}Name`) as string;
+        const memberEmail = formData.get(`member${memberIndex}Email`) as string;
+        const memberPhone = formData.get(`member${memberIndex}Phone`) as string;
         
         if (memberName && (memberEmail || memberPhone)) {
           const [memberResult] = await connection.execute(
@@ -72,10 +72,10 @@ export async function POST(request: Request) {
           const memberId = (memberResult as any).insertId;
 
           // Procesar foto del miembro si existe
-          const memberPhoto = formData.get(\`member\${memberIndex}Photo\`) as File;
+          const memberPhoto = formData.get(`member${memberIndex}Photo`) as File;
           if (memberPhoto) {
             const photoBuffer = Buffer.from(await memberPhoto.arrayBuffer());
-            const photoPath = \`/uploads/member_\${memberId}.jpg\`;
+            const photoPath = `/uploads/member_${memberId}.jpg`;
             await writeFile(join(process.cwd(), 'public', photoPath), photoBuffer);
 
             // Actualizar ruta de la foto
