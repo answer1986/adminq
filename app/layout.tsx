@@ -150,6 +150,37 @@ export default function RootLayout({
           `}
         </Script>
 
+        <Script
+  strategy="afterInteractive"
+  src="https://www.googletagmanager.com/gtag/js?id=AW-17416452794"
+/>
+<Script
+  id="gtag-init"
+  strategy="afterInteractive"
+  dangerouslySetInnerHTML={{
+    __html: `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-17416452794');
+      
+      function gtag_report_conversion(url) {
+        var callback = function () {
+          if (typeof(url) != 'undefined') {
+            window.location = url;
+          }
+        };
+        gtag('event', 'conversion', {
+          'send_to': 'AW-17416452794/AxJ4CMy-v_0aELr15_BA',
+          'transaction_id': '',
+          'event_callback': callback
+        });
+        return false;
+      }
+    `,
+  }}
+/>
+
         {/* Datos estructurados JSON-LD */}
         <Script
           id="json-ld"

@@ -149,6 +149,15 @@ export default function Header() {
           }}>
             Contacto
           </Link>
+          <Link href="/registro" style={{
+            color: 'white',
+            textDecoration: 'none',
+            fontWeight: '500',
+            transition: 'color 0.3s ease',
+            fontSize: 'clamp(0.9rem, 2vw, 1rem)'
+          }}>
+            Registro
+          </Link>
           <a 
             href="https://wa.me/56974532868" 
             target="_blank" 
@@ -241,8 +250,8 @@ export default function Header() {
             >
               Transparencia
             </Link>
-            <Link 
-              href="#contacto" 
+            <Link
+              href="#contacto"
               onClick={closeMenu}
               style={{
                 color: 'white',
@@ -255,6 +264,21 @@ export default function Header() {
               }}
             >
               Contacto
+            </Link>
+            <Link
+              href="/registro"
+              onClick={closeMenu}
+              style={{
+                color: 'white',
+                textDecoration: 'none',
+                fontWeight: '500',
+                padding: '12px 0',
+                borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+                transition: 'color 0.3s ease',
+                fontSize: '1.1rem'
+              }}
+            >
+              Registro
             </Link>
             <a 
               href="https://wa.me/56974532868" 
