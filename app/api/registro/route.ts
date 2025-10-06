@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
     });
 
     // Insert into single table adminq
-    const [result] = await connection.execute(
+    await connection.execute(
       `INSERT INTO adminq (
         apartment_number, head_name, head_email, head_phone, head_password, head_photo_path,
         member1_name, member1_email, member1_phone, member1_photo_path,
