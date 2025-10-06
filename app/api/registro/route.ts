@@ -40,7 +40,7 @@ export async function POST(request: Request) {
         [apartmentNumber, headName, headEmail, headPhone, headPassword, comments]
       );
 
-      const residentId = (result as any).insertId;
+      const residentId = (result as { insertId: number }).insertId;
 
       // Procesar foto del jefe de hogar si existe
       const headPhoto = formData.get('member0Photo') as File;
@@ -69,7 +69,7 @@ export async function POST(request: Request) {
             [residentId, memberName, memberEmail || null, memberPhone || null]
           );
 
-          const memberId = (memberResult as any).insertId;
+          const memberId = (memberResult as { insertId: number }).insertId;
 
           // Procesar foto del miembro si existe
           const memberPhoto = formData.get(`member${memberIndex}Photo`) as File;
